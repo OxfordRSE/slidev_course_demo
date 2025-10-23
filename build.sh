@@ -21,7 +21,7 @@ cp -r presentations/${presentation_name}/* build/${presentation_name}/
 npx slidev build --out dist --base /${repo_root}/${presentation_name}/ build/${presentation_name}/slides.md
 
 # Remove all except 'dist' folder
-mv build/${presentation_name}/dist out/${presentation_name}
+mv build/${presentation_name}/dist dist/${presentation_name}
 rm -rf build/${presentation_name}
 
 popd
