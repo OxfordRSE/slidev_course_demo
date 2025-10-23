@@ -33,7 +33,7 @@ jobs:
 
       - name: Build
         shell: bash
-        run: ./build_all.sh
+        run: ./build_all.sh ${{github.event.repository.name}}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
