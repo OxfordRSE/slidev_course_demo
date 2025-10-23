@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-repo_root="$2"
+repo_root="$1"
 
 pushd $(dirname "$0")
 
