@@ -9,6 +9,12 @@ transition: slide-left
 mdc: true
 ---
 
+---
+layout: orientation
+title: Orientation
+highlight: Introduction to HPC
+disabled: false
+---
 
 ---
 src: ../../common/courses/hpc/main.md
