@@ -1,16 +1,20 @@
 ---
-theme: seriph
-# some information about your slides (markdown enabled)
+theme: ../../common/theme-oxrse
 title: Introduction to HPC
-# https://sli.dev/features/drawing
+layout: cover
+highlighter: shiki
 drawings:
   persist: false
-# slide transition: https://sli.dev/guide/animations.html#slide-transitions
 transition: slide-left
-# enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
 ---
 
+---
+layout: orientation
+title: Orientation
+highlight: Introduction to HPC
+disabled: false
+---
 
 ---
 src: ../../common/courses/hpc/main.md
