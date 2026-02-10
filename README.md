@@ -2,13 +2,13 @@
 
 First, install dependencies:
 
-```shell
+```console
 npm install
 ```
 
 To preview / live edit a presentation:
 
-```shell
+```console
 npx slidev --open --entry presentations/functional/slides.md
 ```
 
@@ -82,7 +82,7 @@ sessions:
 
 You can build with:
 
-```shell
+```console
 TRAINING_EVENT='hilary-2026' npx slidev --open --entry presentations/functional/slides.md
 ```
 
