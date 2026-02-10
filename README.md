@@ -32,7 +32,7 @@ TypeError: localStorage.getItem is not a function
 ```
 
 You may need to set `NODE_OPTIONS='--no-webstorage'` during the build. This is
-because of an incompatability with Node >=25.
+because of an incompatability with Node >=25. See [here](https://github.com/vuejs/devtools/issues/977#issuecomment-3411051527) and [here](https://github.com/microsoft/TypeScript-Website/pull/3450).
 
 ## Build with a specific training event
 
