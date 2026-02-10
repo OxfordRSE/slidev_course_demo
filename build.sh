@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-# temporary workaround to avoid build error
-# https://github.com/vuejs/devtools/issues/977#issuecomment-3411051527
-# https://github.com/microsoft/TypeScript-Website/pull/3450
-export NODE_OPTIONS='--no-webstorage'
-
 pushd $(dirname "$0")
 
 dir="$1"
