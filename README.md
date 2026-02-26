@@ -1,4 +1,9 @@
-# Slidev build
+# OxRSE training slides demo
+
+This repo conains [sli.dev](https://sli.dev/) slideshow wrappers for our training material.
+The meat of each slideshow and the theme `theme-oxrse` are in `common` which is a submodule, pointing to the [training-course-slides](https://github.com/OxfordRSE/training-course-slides) repo.
+
+## Slidev build
 
 First, install dependencies:
 
