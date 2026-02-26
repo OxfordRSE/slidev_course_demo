@@ -1,0 +1,24 @@
+{
+  "default": true,
+
+  "MD012": {
+    "maximum": 2
+  },
+
+  "MD013": false,
+
+  "MD022": {
+    "lines_above": 1,
+    "lines_below": 1
+  },
+
+  "MD024": {
+    "siblings_only": true
+  },
+
+  "MD033": {
+    "allowed_elements": ["br", "sub", "sup"]
+  },
+
+  "MD041": false
+}
