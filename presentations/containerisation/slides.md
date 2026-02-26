@@ -10,12 +10,16 @@ mdc: true
 ---
 
 ---
+
+```yaml
 layout: orientation
 title: Orientation
 highlight: Containerisation with Docker
 disabled: false
----
+```
 
 ---
+
+```yaml
 src: ../../common/courses/containerisation/main.md
----
+```
