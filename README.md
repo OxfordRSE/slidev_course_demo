@@ -1,4 +1,9 @@
-# Slidev build
+# OxRSE training slides demo
+
+This repo conains [sli.dev](https://sli.dev/) slideshow wrappers for our training material.
+The meat of each slideshow and the theme `theme-oxrse` are in `common` which is a submodule, pointing to the [training-course-slides](https://github.com/OxfordRSE/training-course-slides) repo.
+
+## Slidev build
 
 First, install dependencies:
 
@@ -32,9 +37,9 @@ TypeError: localStorage.getItem is not a function
 ```
 
 You may need to set `NODE_OPTIONS='--no-webstorage'` during the build. This is
-because of an incompatability with Node >=25. See [here](https://github.com/vuejs/devtools/issues/977#issuecomment-3411051527) and [here](https://github.com/microsoft/TypeScript-Website/pull/3450).
+because of an incompatability with Node >=25. See this [Vue Devtools issue comment](https://github.com/vuejs/devtools/issues/977#issuecomment-3411051527) and the [TypeScript Website pull request](https://github.com/microsoft/TypeScript-Website/pull/3450).
 
-## Build with a specific training event
+### Build with a specific training event
 
 You may set up a YAML fle for a training event that contains all the dates of
 different sessions, and by using the theme `theme-oxrse` with the `orientation`
@@ -89,7 +94,7 @@ TRAINING_EVENT='hilary-2026' npx slidev --open --entry presentations/functional/
 Note: this is an initial implementation and there is no rigorous error checking
 at the moment, e.g. you can put anything in the 'date' field.
 
-# Deployment
+## Deployment
 
 When the repository is updated, a Github action will use `./build_all.sh` to build all presentations into a `dist/` folder and deploy to github pages.
 
