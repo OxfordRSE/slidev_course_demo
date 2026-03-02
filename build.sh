@@ -18,7 +18,14 @@ mkdir -p build/${presentation_name}
 cp -r common/* build/${presentation_name}/
 cp -r presentations/${presentation_name}/* build/${presentation_name}/
 
-npx slidev build --out dist --base /${repo_root}/${presentation_name}/ build/${presentation_name}/slides.md
+# compute base path correctly whether repo_root is empty or not
+if [ -n "$repo_root" ]; then
+  base="/${repo_root}/${presentation_name}/"
+else
+  base="/${presentation_name}/"
+fi
+
+npx slidev build --out dist --base "${base}" build/${presentation_name}/slides.md
 
 # Remove all except 'dist' folder
 mv build/${presentation_name}/dist dist/${presentation_name}
