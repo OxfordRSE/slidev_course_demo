@@ -47,7 +47,7 @@ layout, it will include the 'Orientation' slide in the PowerPoint presentation
 using the dates in the YAML file. The YAML file provides a single source of
 truth for all the dates of a training event and highlight the current session.
 
-For example, if you have a YAML file `common/events/hilary-2026.yaml` with the
+For example, if you have a YAML file `events/hilary-2026.yaml` with the
 following content:
 
 ```yaml
