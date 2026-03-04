@@ -10,16 +10,12 @@ mdc: true
 ---
 
 ---
-
 layout: orientation
 title: Orientation
 highlight: Version Control with Git
 disabled: true
-
 ---
 
 ---
-
 src: ../../common/courses/version_control/main.md
-
 ---

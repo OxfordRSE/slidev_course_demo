@@ -10,16 +10,12 @@ mdc: true
 ---
 
 ---
-
 layout: orientation
 title: Orientation
 highlight: Collaborative Code Development
 disabled: true
-
 ---
 
 ---
-
 src: ../../common/courses/collaborative_code_development/main.md
-
 ---
