@@ -1,5 +1,5 @@
 ---
-theme: ../../common/theme-oxrse
+theme: oxrse
 title: Packaging and Dependency Management
 layout: cover
 highlighter: shiki

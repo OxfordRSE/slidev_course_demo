@@ -1,5 +1,5 @@
 ---
-theme: ../../common/theme-oxrse
+theme: oxrse
 title: Collaborative Code Development
 layout: cover
 highlighter: shiki

@@ -1,5 +1,5 @@
 ---
-theme: ../../common/theme-oxrse
+theme: oxrse
 title: Introduction to HPC
 layout: cover
 highlighter: shiki

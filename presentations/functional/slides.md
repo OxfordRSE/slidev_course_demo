@@ -1,5 +1,5 @@
 ---
-theme: ../../common/theme-oxrse
+theme: oxrse
 title: Functional Programming
 layout: cover
 highlighter: shiki
