@@ -1,5 +1,5 @@
 ---
-theme: ../../common/theme-oxrse
+theme: oxrse
 title: Object-Oriented Programming
 layout: cover
 highlighter: shiki
