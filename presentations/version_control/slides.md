@@ -1,5 +1,5 @@
 ---
-theme: ../../common/theme-oxrse
+theme: oxrse
 title: Version Control with Git
 layout: cover
 highlighter: shiki

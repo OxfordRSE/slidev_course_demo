@@ -1,5 +1,5 @@
 ---
-theme: ../../common/theme-oxrse
+theme: oxrse
 title: Workflows with Snakemake
 layout: cover
 highlighter: shiki

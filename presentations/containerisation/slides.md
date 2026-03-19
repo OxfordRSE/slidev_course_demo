@@ -1,5 +1,5 @@
 ---
-theme: ../../common/theme-oxrse
+theme: oxrse
 title: Containerisation with Docker
 layout: cover
 highlighter: shiki
