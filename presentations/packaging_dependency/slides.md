@@ -1,6 +1,8 @@
 ---
 theme: oxrse
 title: Packaging and Dependency Management
+addons:
+  - ../common/addon
 layout: cover
 highlighter: shiki
 drawings:
@@ -15,7 +17,7 @@ mdc: true
 layout: orientation
 title: Orientation
 highlight: Packaging and Dependency Management
-disabled: false
+training-event-only: true
 ```
 
 ---

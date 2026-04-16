@@ -1,6 +1,8 @@
 ---
 theme: oxrse
 title: Containerisation with Docker
+addons:
+  - ../common/addon
 layout: cover
 highlighter: shiki
 drawings:
@@ -15,7 +17,7 @@ mdc: true
 layout: orientation
 title: Orientation
 highlight: Containerisation with Docker
-disabled: false
+training-event-only: true
 ```
 
 ---

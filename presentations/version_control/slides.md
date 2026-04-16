@@ -1,6 +1,8 @@
 ---
 theme: oxrse
 title: Version Control with Git
+addons:
+  - ../common/addon
 layout: cover
 highlighter: shiki
 drawings:
@@ -10,12 +12,16 @@ mdc: true
 ---
 
 ---
+
+```yaml
 layout: orientation
 title: Orientation
 highlight: Version Control with Git
-disabled: true
----
+training-event-only: true
+```
 
 ---
+
+```yaml
 src: ../../common/courses/version_control/main.md
----
+```
