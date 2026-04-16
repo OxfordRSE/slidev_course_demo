@@ -27,3 +27,8 @@ src: ../../common/courses/collaborative_code_development/main.md
 ```
 
 ---
+
+```yaml
+src: ../../common/courses/epilogue/main.md
+training-event-only: true
+```
