@@ -1,6 +1,8 @@
 ---
 theme: oxrse
 title: Introduction to HPC
+addons:
+  - ../common/addon
 layout: cover
 highlighter: shiki
 drawings:
@@ -15,7 +17,7 @@ mdc: true
 layout: orientation
 title: Orientation
 highlight: Introduction to HPC
-disabled: false
+training-event-only: true
 ```
 
 ---

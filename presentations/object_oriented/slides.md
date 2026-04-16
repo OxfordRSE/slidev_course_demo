@@ -1,6 +1,8 @@
 ---
 theme: oxrse
 title: Object-Oriented Programming
+addons:
+  - ../common/addon
 layout: cover
 highlighter: shiki
 drawings:
@@ -16,7 +18,7 @@ plantUmlServer: https://www.plantuml.com/plantuml
 layout: orientation
 title: Orientation
 highlight: Object-Oriented Programming
-disabled: false
+training-event-only: true
 ```
 
 ---
