@@ -11,7 +11,7 @@ sessions:
     topic: Version control with Git
   - date: "29 Jan"
     slot: afternoon
-    topic: Collaboration with GitHub
+    topic: Collaborative Code Development
   - date: "05 Feb"
     slot: morning
     topic: Software Testing
