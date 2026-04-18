@@ -8,6 +8,7 @@ The meat of each slideshow and the theme `theme-oxrse` are in `common` which is 
 First, install dependencies:
 
 ```console
+git submodule update --init --recursive
 npm install
 ```
 
