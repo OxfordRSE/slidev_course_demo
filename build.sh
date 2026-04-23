@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 
-pushd $(dirname "$0")
+set -euo pipefail
 
-dir="$1"
-if [ -z "$dir" ]; then
-    echo "Usage: $0 <presentation_directory>"
+pushd "$(dirname "$0")" > /dev/null
+
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 <presentation_directory> [repo_root]" >&2
     exit 1
 fi
 
-repo_root="$2"
+dir="$1"
+repo_root="${2:-}"
 
 presentation_name=$(basename "$dir")
 echo "Presentation name: $presentation_name"
@@ -31,4 +33,4 @@ npx slidev build --out dist --base "${base}" build/${presentation_name}/slides.m
 mv build/${presentation_name}/dist dist/${presentation_name}
 rm -rf build/${presentation_name}
 
-popd
+popd > /dev/null
