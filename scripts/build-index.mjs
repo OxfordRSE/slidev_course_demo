@@ -8,6 +8,7 @@ import YAML from 'yaml'
 const repoRoot = process.cwd()
 const distDir = path.join(repoRoot, 'dist')
 const presentationsDir = path.join(repoRoot, 'presentations')
+const courseMetadataPath = path.join(repoRoot, 'presentations', 'index-metadata.yaml')
 const logoSource = path.join(
   repoRoot,
   'node_modules',
@@ -32,42 +33,23 @@ const courseOrder = [
   'snakemake',
 ]
 
-const descriptions = {
-  introduction: 'Why software engineering matters in research, how the course is structured, and where modern tooling and AI fit in.',
-  object_oriented: 'Core OO design ideas, modelling techniques, and the tradeoffs behind classes, interfaces, and composition.',
-  functional: 'Pure functions, immutability, higher-order programming, and ways to make code simpler to reason about.',
-  version_control: 'A practical Git foundation for safer collaboration, reproducibility, and confident change management.',
-  collaborative_code_development: 'Working effectively with branches, pull requests, issue trackers, and code review in shared repositories.',
-  testing: 'Testing strategies, unit and integration testing, and how to use tests to improve reliability without slowing delivery.',
-  packaging_dependency: 'Managing environments, dependencies, and packaging workflows so software stays repeatable and distributable.',
-  containerisation: 'Using Docker to package applications and environments consistently across development, CI, and deployment.',
-  hpc: 'An introduction to high-performance computing concepts, architectures, and ways to adapt software for larger systems.',
-  snakemake: 'Building reproducible computational workflows with rules, dependencies, and scalable automation.',
+async function readCourseMetadata() {
+  const contents = await fs.readFile(courseMetadataPath, 'utf8')
+  const parsed = YAML.parse(contents)
+  return parsed && typeof parsed === 'object' ? parsed : {}
 }
 
-const audiences = {
-  introduction: 'Framing',
-  object_oriented: 'Design',
-  functional: 'Programming',
-  version_control: 'Collaboration',
-  collaborative_code_development: 'Teamwork',
-  testing: 'Quality',
-  packaging_dependency: 'Environments',
-  containerisation: 'Deployment',
-  hpc: 'Infrastructure',
-  snakemake: 'Automation',
-}
-
-async function readPresentationMeta(slug) {
+async function readPresentationMeta(slug, courseMetadata) {
   const file = path.join(presentationsDir, slug, 'slides.md')
   const contents = await fs.readFile(file, 'utf8')
   const frontmatterMatch = contents.match(/^---\n([\s\S]*?)\n---/)
   const frontmatter = frontmatterMatch ? YAML.parse(frontmatterMatch[1]) : {}
+  const metadata = courseMetadata?.[slug] ?? {}
   return {
     slug,
     title: frontmatter.title || humanize(slug),
-    description: descriptions[slug] || 'Course presentation',
-    audience: audiences[slug] || 'Presentation',
+    description: metadata.description || 'Course presentation',
+    audience: metadata.audience || 'Presentation',
     href: `./${slug}/index.html`,
   }
 }
@@ -80,13 +62,14 @@ function humanize(slug) {
 }
 
 async function getPresentationEntries() {
+  const courseMetadata = await readCourseMetadata()
   const dirEntries = await fs.readdir(presentationsDir, { withFileTypes: true })
   const slugs = dirEntries.filter(entry => entry.isDirectory()).map(entry => entry.name)
   const ordered = [
     ...courseOrder.filter(slug => slugs.includes(slug)),
     ...slugs.filter(slug => !courseOrder.includes(slug)).sort(),
   ]
-  return Promise.all(ordered.map(readPresentationMeta))
+  return Promise.all(ordered.map(slug => readPresentationMeta(slug, courseMetadata)))
 }
 
 async function readEventSchedule() {
@@ -128,57 +111,6 @@ function escapeHtml(value) {
     .replaceAll('"', '&quot;')
 }
 
-function renderStats(presentations, eventSchedule) {
-  const stats = [
-    { value: String(presentations.length), label: 'presentations' },
-    { value: 'Slidev', label: 'delivery format' },
-  ]
-
-  if (eventSchedule?.sessions?.length)
-    stats.push({ value: String(eventSchedule.sessions.length), label: 'scheduled sessions' })
-  else
-    stats.push({ value: 'OxRSE', label: 'theme and branding' })
-
-  return stats.map(stat => `
-          <div class="stat">
-            <strong>${escapeHtml(stat.value)}</strong>
-            <span>${escapeHtml(stat.label)}</span>
-          </div>`).join('')
-}
-
-function renderEventPanel(eventSchedule) {
-  if (!eventSchedule?.sessions?.length) {
-    return `
-        <aside class="schedule-card">
-          <p class="eyebrow">Course Structure</p>
-          <h2>Built as a browsable set of self-contained sessions.</h2>
-          <p>Each presentation opens directly into its own Slidev deck, so attendees can jump to a topic without losing the overall course context.</p>
-          <p class="schedule-note">Set <code>TRAINING_EVENT</code> during build to surface the current scheduled run here.</p>
-        </aside>`
-  }
-
-  const sessions = eventSchedule.sessions.slice(0, 6).map(session => `
-            <li>
-              <span>${escapeHtml(session.date)}</span>
-              <strong>${escapeHtml(session.topic)}</strong>
-              <em>${escapeHtml(session.slot)}</em>
-            </li>`).join('')
-
-  const remaining = eventSchedule.sessions.length - 6
-  const suffix = remaining > 0
-    ? `<p class="schedule-note">Plus ${remaining} more session${remaining === 1 ? '' : 's'} in this event.</p>`
-    : ''
-
-  return `
-        <aside class="schedule-card">
-          <p class="eyebrow">Current Training Event</p>
-          <h2>${escapeHtml(eventSchedule.name)}${eventSchedule.year ? ` ${escapeHtml(eventSchedule.year)}` : ''}</h2>
-          <ul class="schedule-list">${sessions}
-          </ul>
-          ${suffix}
-        </aside>`
-}
-
 function renderCards(presentations) {
   return presentations.map((presentation, index) => `
           <a class="deck-card" href="${presentation.href}">
@@ -209,9 +141,6 @@ ${plausibleSnippet}  <style>
       --oxrse-ink: #122033;
       --oxrse-muted: #536277;
       --oxrse-line: rgba(0, 33, 71, 0.12);
-      --oxrse-panel: rgba(255, 255, 255, 0.78);
-      --oxrse-panel-strong: #ffffff;
-      --oxrse-highlight: #b9d9eb;
       --oxrse-highlight-strong: #78b3cf;
       --oxrse-wash: #edf4f8;
       --oxrse-shadow: 0 24px 80px rgba(0, 33, 71, 0.14);
@@ -276,6 +205,10 @@ ${plausibleSnippet}  <style>
       box-shadow: var(--oxrse-shadow);
       padding: clamp(1.25rem, 3vw, 2rem);
       isolation: isolate;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
     }
 
     .hero-panel::before,
@@ -300,14 +233,6 @@ ${plausibleSnippet}  <style>
       left: 46%;
       bottom: -9rem;
       background: rgba(255, 255, 255, 0.08);
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: clamp(2rem, 6vw, 4rem);
     }
 
     .brand {
@@ -339,195 +264,17 @@ ${plausibleSnippet}  <style>
       margin-top: 0.15rem;
     }
 
-    .hero-link {
-      padding: 0.8rem 1rem;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      backdrop-filter: blur(10px);
-      transition: background 160ms ease, transform 160ms ease;
-      white-space: nowrap;
-    }
-
-    .hero-link:hover,
-    .hero-link:focus-visible {
-      background: rgba(255, 255, 255, 0.18);
-      transform: translateY(-1px);
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.45fr) minmax(18rem, 0.8fr);
-      gap: 1.5rem;
-      align-items: stretch;
-    }
-
-    .eyebrow {
-      margin: 0 0 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 0.78rem;
-      opacity: 0.72;
-    }
-
-    .hero-copy h1 {
+    .hero-title {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2.4rem, 5.4vw, 4.8rem);
-      line-height: 0.98;
-      max-width: 10ch;
-    }
-
-    .hero-copy p {
-      margin: 1rem 0 0;
-      max-width: 58ch;
-      font-size: 1.06rem;
-      line-height: 1.7;
-      color: rgba(255, 255, 255, 0.84);
-    }
-
-    .hero-actions {
-      margin-top: 1.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.85rem;
-      align-items: center;
-    }
-
-    .button-primary,
-    .button-secondary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 3rem;
-      padding: 0.85rem 1.2rem;
-      border-radius: 999px;
-      font-weight: 600;
-      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
-    }
-
-    .button-primary {
-      background: white;
-      color: var(--oxrse-blue);
-    }
-
-    .button-secondary {
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      background: rgba(255, 255, 255, 0.08);
-      color: white;
-    }
-
-    .button-primary:hover,
-    .button-primary:focus-visible,
-    .button-secondary:hover,
-    .button-secondary:focus-visible {
-      transform: translateY(-1px);
-    }
-
-    .stats {
-      margin-top: 2rem;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.9rem;
-    }
-
-    .stat {
-      border-radius: 20px;
-      padding: 1rem;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(8px);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.4rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .stat span {
-      font-size: 0.92rem;
-      color: rgba(255, 255, 255, 0.76);
-    }
-
-    .schedule-card {
-      align-self: stretch;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: var(--oxrse-radius);
-      padding: 1.25rem;
-      backdrop-filter: blur(10px);
-    }
-
-    .schedule-card h2 {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.75rem;
-      line-height: 1.15;
-    }
-
-    .schedule-card p,
-    .schedule-note {
-      color: rgba(255, 255, 255, 0.78);
-      line-height: 1.65;
-    }
-
-    .schedule-list {
-      list-style: none;
-      padding: 0;
-      margin: 1.25rem 0 0;
-      display: grid;
-      gap: 0.8rem;
-    }
-
-    .schedule-list li {
-      display: grid;
-      gap: 0.18rem;
-      padding-bottom: 0.8rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    }
-
-    .schedule-list li:last-child {
-      border-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .schedule-list span,
-    .schedule-list em {
-      font-size: 0.88rem;
-      color: rgba(255, 255, 255, 0.68);
-      font-style: normal;
-    }
-
-    .schedule-list strong {
-      font-size: 1rem;
-      line-height: 1.35;
+      font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+      line-height: 1.1;
+      opacity: 0.92;
+      text-align: right;
     }
 
     .content {
       padding: 1rem 1rem 3rem;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 1rem;
-      margin: 1.5rem 0 1.25rem;
-    }
-
-    .section-header h2 {
-      margin: 0.15rem 0 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2rem, 3.2vw, 2.8rem);
-      color: var(--oxrse-blue);
-    }
-
-    .section-header p {
-      margin: 0;
-      max-width: 42ch;
-      color: var(--oxrse-muted);
-      line-height: 1.65;
     }
 
     .cards {
@@ -616,31 +363,21 @@ ${plausibleSnippet}  <style>
     .footer-panel {
       border-top: 1px solid var(--oxrse-line);
       padding-top: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    code {
-      font-family: "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
-      font-size: 0.92em;
-      background: rgba(255, 255, 255, 0.14);
-      padding: 0.15rem 0.35rem;
-      border-radius: 0.4rem;
     }
 
     @media (max-width: 980px) {
-      .hero-grid,
-      .cards {
-        grid-template-columns: 1fr;
+      .hero-panel {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
       }
 
-      .section-header,
-      .footer-panel,
-      .topbar {
-        align-items: start;
-        flex-direction: column;
+      .hero-title {
+        text-align: left;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
       }
 
       .deck-card {
@@ -664,10 +401,6 @@ ${plausibleSnippet}  <style>
         border-radius: 24px;
       }
 
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
       .deck-card {
         grid-template-columns: 1fr;
       }
@@ -683,44 +416,19 @@ ${plausibleSnippet}  <style>
   <main>
     <section class="hero">
       <div class="page-shell hero-panel">
-        <div class="topbar">
-          <div class="brand">
-            <img src="./assets/oxrse-logo.svg" alt="Oxford Research Software Engineering Group" />
-            <div>
-              <span>Oxford Research Software Engineering Group</span>
-              <strong>Software Engineering Course</strong>
-            </div>
+        <div class="brand">
+          <img src="./assets/oxrse-logo.svg" alt="Oxford Research Software Engineering Group" />
+          <div>
+            <span>Oxford Research Software Engineering Group</span>
+            <strong>Software Engineering Course</strong>
           </div>
-          <a class="hero-link" href="https://www.rse.ox.ac.uk/">rse.ox.ac.uk</a>
         </div>
-
-        <div class="hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow">Slidev Course Hub</p>
-            <h1>Browse the course like a programme, not a file listing.</h1>
-            <p>This landing page uses the Oxford RSE theme’s core palette and a layout direction influenced by the main Oxford RSE site: strong branded hero treatment, structured cards, and clearer paths into each session.</p>
-            <div class="hero-actions">
-              <a class="button-primary" href="${presentations[0]?.href || '#presentations'}">Start with ${escapeHtml(presentations[0]?.title || 'the first deck')}</a>
-              <a class="button-secondary" href="#presentations">View all presentations</a>
-            </div>
-            <div class="stats">${renderStats(presentations, eventSchedule)}
-            </div>
-          </div>
-${renderEventPanel(eventSchedule)}
-        </div>
+        <h1 class="hero-title">Course sessions</h1>
       </div>
     </section>
 
     <section class="content">
       <div class="page-shell">
-        <div class="section-header" id="presentations">
-          <div>
-            <p class="eyebrow" style="color: var(--oxrse-blue); opacity: 1;">Presentations</p>
-            <h2>All course sessions</h2>
-          </div>
-          <p>Each card links directly to a self-contained Slidev build. The ordering follows the teaching flow rather than the directory names.</p>
-        </div>
-
         <div class="cards">
 ${renderCards(presentations)}
         </div>
@@ -730,8 +438,7 @@ ${renderCards(presentations)}
 
   <footer class="footer">
     <div class="page-shell footer-panel">
-      <span>Built from the Oxford RSE Slidev course repository.</span>
-      <span>Plausible tracking is optional and enabled only when <code>PLAUSIBLE_DOMAIN</code> is set at build time.</span>
+      <span>Oxford Research Software Engineering Group</span>
     </div>
   </footer>
 </body>
