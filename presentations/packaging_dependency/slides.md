@@ -25,3 +25,10 @@ training-event-only: true
 ```yaml
 src: ../../common/courses/packaging_dependency/main.md
 ```
+
+---
+
+```yaml
+src: ../../common/courses/epilogue/main.md
+training-event-only: true
+```
