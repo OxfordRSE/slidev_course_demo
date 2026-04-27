@@ -99,3 +99,15 @@ at the moment, e.g. you can put anything in the 'date' field.
 
 When the repository is updated, a Github action will use `./build_all.sh` to build all presentations into a `dist/` folder and deploy to github pages.
 
+The generated course landing page at `dist/index.html` now uses a custom template
+that pulls presentation titles from each `slides.md`, reuses the OxRSE logo, and
+can optionally surface the current training schedule when `TRAINING_EVENT` is set.
+
+### Optional analytics
+
+The landing page includes optional Plausible boilerplate. To enable it during the
+build, set:
+
+- `PLAUSIBLE_DOMAIN` to your deployed site domain
+- `PLAUSIBLE_SRC` if you need a non-default Plausible script URL
+- `PLAUSIBLE_API` if you are proxying or self-hosting the events endpoint

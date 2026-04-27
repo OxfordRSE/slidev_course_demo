@@ -16,14 +16,10 @@ pushd "$(dirname "$0")" > /dev/null
 rm -rf build dist
 mkdir -p build dist
 
-echo "<html><h1>Presentations</h1>" > dist/index.html
-
 for dir in presentations/*/; do
     ./build.sh "$dir" "$repo_root"
-    presentation_name=$(basename "$dir")
-    echo "<li><a href=\"${presentation_name%/}/index.html\">${presentation_name%/}</a></li>" >> dist/index.html
 done
 
-echo "</html>" >> dist/index.html
+node ./scripts/build-index.mjs
 
 popd > /dev/null
