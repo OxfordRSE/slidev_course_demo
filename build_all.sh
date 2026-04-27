@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-repo_root="$1"
+repo_root="${1:-}"
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if [ ! -d "${script_dir}/common" ]; then
@@ -10,7 +11,7 @@ if [ ! -d "${script_dir}/common" ]; then
   exit 1
 fi
 
-pushd $(dirname "$0")
+pushd "$(dirname "$0")" > /dev/null
 
 rm -rf build dist
 mkdir -p build dist
@@ -25,4 +26,4 @@ done
 
 echo "</html>" >> dist/index.html
 
-popd
+popd > /dev/null
