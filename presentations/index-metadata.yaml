@@ -1,33 +1,46 @@
 introduction:
+  number: 0
   description: Why software engineering matters in research, how the course is structured, and where modern tooling and AI fit in.
   audience: Framing
 object_oriented:
+  number: 1
   description: How to use classes to encapsulate data and behavior, and how inheritance and composition can make code more maintainable.
   audience: Paradigms
 functional:
+  number: 2
   description: Core functional programming concepts, including pure functions, immutability, and higher-order functions.
   audience: Paradigms
 version_control:
+  number: 3
   description: A practical Git foundation for safer collaboration, reproducibility, and confident control over changes in your code.
   audience: Collaboration
 collaborative_code_development:
+  number: 4
   description: Working effectively with branches, pull requests, issue trackers, and code review in shared repositories.
   audience: Collaboration
 testing:
+  number: 5
   description: Strategies for how to test effectively to improve reliability, including unit and integration testing, and test-driven development.
   audience: Tooling
 continuous_integration:
+  number: 6
+  title: Continuous Integration
   description: Setting up automated testing and quality checks with continuous integration tools to catch issues early and maintain code health.
   audience: Tooling
+  available: false
 packaging_dependency:
+  number: 7
   description: How to package and manage dependencies so software stays reusable and distributable.
-  audience: Environments
+  audience: Tooling
 containerisation:
+  number: 8
   description: Using Docker to package applications and environments consistently across development, CI, and deployment.
-  audience: Deployment
+  audience: Tooling
 hpc:
+  number: 9
   description: An introduction to high-performance computing concepts, architectures, and use-cases.
-  audience: Infrastructure
+  audience: Scalability
 snakemake:
+  number: 10
   description: Building reproducible computational workflows with rules, dependencies, and easy scalability.
   audience: Scalability

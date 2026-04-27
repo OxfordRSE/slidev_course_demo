@@ -20,38 +20,17 @@ const logoSource = path.join(
 const logoDir = path.join(distDir, 'assets')
 const logoDest = path.join(logoDir, 'oxrse-logo.svg')
 
-const courseOrder = [
-  'introduction',
-  'object_oriented',
-  'functional',
-  'version_control',
-  'collaborative_code_development',
-  'testing',
-  'packaging_dependency',
-  'containerisation',
-  'hpc',
-  'snakemake',
-]
-
 async function readCourseMetadata() {
   const contents = await fs.readFile(courseMetadataPath, 'utf8')
   const parsed = YAML.parse(contents)
   return parsed && typeof parsed === 'object' ? parsed : {}
 }
 
-async function readPresentationMeta(slug, courseMetadata) {
+async function readPresentationFrontmatter(slug) {
   const file = path.join(presentationsDir, slug, 'slides.md')
   const contents = await fs.readFile(file, 'utf8')
   const frontmatterMatch = contents.match(/^---\n([\s\S]*?)\n---/)
-  const frontmatter = frontmatterMatch ? YAML.parse(frontmatterMatch[1]) : {}
-  const metadata = courseMetadata?.[slug] ?? {}
-  return {
-    slug,
-    title: frontmatter.title || humanize(slug),
-    description: metadata.description || 'Course presentation',
-    audience: metadata.audience || 'Presentation',
-    href: `./${slug}/index.html`,
-  }
+  return frontmatterMatch ? (YAML.parse(frontmatterMatch[1]) ?? {}) : {}
 }
 
 function humanize(slug) {
@@ -64,12 +43,36 @@ function humanize(slug) {
 async function getPresentationEntries() {
   const courseMetadata = await readCourseMetadata()
   const dirEntries = await fs.readdir(presentationsDir, { withFileTypes: true })
-  const slugs = dirEntries.filter(entry => entry.isDirectory()).map(entry => entry.name)
-  const ordered = [
-    ...courseOrder.filter(slug => slugs.includes(slug)),
-    ...slugs.filter(slug => !courseOrder.includes(slug)).sort(),
+  const presentationDirs = new Set(
+    dirEntries
+      .filter(entry => entry.isDirectory())
+      .map(entry => entry.name),
+  )
+  const metadataEntries = Object.entries(courseMetadata)
+  const metadataSlugs = new Set(metadataEntries.map(([slug]) => slug))
+  const slugs = [
+    ...metadataEntries.map(([slug]) => slug),
+    ...[...presentationDirs].filter(slug => !metadataSlugs.has(slug)).sort(),
   ]
-  return Promise.all(ordered.map(slug => readPresentationMeta(slug, courseMetadata)))
+
+  return Promise.all(slugs.map(async (slug) => {
+    const metadata = courseMetadata?.[slug] ?? {}
+    const hasSlides = presentationDirs.has(slug)
+    const frontmatter = hasSlides ? await readPresentationFrontmatter(slug) : {}
+    const href = hasSlides ? `./${slug}/index.html` : (metadata.href || null)
+    const available = metadata.available ?? Boolean(href)
+
+    return {
+      slug,
+      number: metadata.number,
+      title: metadata.title || frontmatter.title || humanize(slug),
+      description: metadata.description || 'Course presentation',
+      audience: metadata.audience || 'Presentation',
+      href,
+      available,
+      ctaLabel: available ? 'Open presentation' : 'Slides not available',
+    }
+  }))
 }
 
 async function readEventSchedule() {
@@ -112,16 +115,25 @@ function escapeHtml(value) {
 }
 
 function renderCards(presentations) {
-  return presentations.map((presentation, index) => `
-          <a class="deck-card" href="${presentation.href}">
-            <span class="card-index">${String(index + 1).padStart(2, '0')}</span>
+  return presentations.map((presentation) => {
+    const tagName = presentation.available && presentation.href ? 'a' : 'div'
+    const hrefAttribute = presentation.available && presentation.href ? ` href="${presentation.href}"` : ''
+    const availabilityClass = presentation.available ? '' : ' deck-card-unavailable'
+    const statusMarkup = presentation.available
+      ? `<span class="card-cta">${escapeHtml(presentation.ctaLabel)}</span>`
+      : `<span class="card-cta card-cta-muted">${escapeHtml(presentation.ctaLabel)}</span>`
+
+    return `
+          <${tagName} class="deck-card${availabilityClass}"${hrefAttribute}>
+            <span class="card-index">${presentation.number ?? '?'}</span>
             <div class="card-copy">
               <p class="card-kicker">${escapeHtml(presentation.audience)}</p>
               <h3>${escapeHtml(presentation.title)}</h3>
               <p>${escapeHtml(presentation.description)}</p>
             </div>
-            <span class="card-cta">Open deck</span>
-          </a>`).join('')
+            ${statusMarkup}
+          </${tagName}>`
+  }).join('')
 }
 
 function renderHtml(presentations, eventSchedule) {
@@ -352,6 +364,29 @@ ${plausibleSnippet}  <style>
       color: var(--oxrse-blue);
       font-weight: 700;
       white-space: nowrap;
+    }
+
+    .deck-card-unavailable {
+      background: linear-gradient(180deg, rgba(245, 248, 250, 0.98), rgba(240, 244, 247, 0.94));
+    }
+
+    .deck-card-unavailable:hover {
+      transform: none;
+      box-shadow: 0 10px 30px rgba(0, 33, 71, 0.07);
+      border-color: var(--oxrse-line);
+    }
+
+    .deck-card-unavailable::before {
+      background: linear-gradient(180deg, #a9b8c7, #74859a);
+    }
+
+    .deck-card-unavailable .card-index {
+      background: #eef2f5;
+      color: #5a6b7f;
+    }
+
+    .card-cta-muted {
+      color: #5a6b7f;
     }
 
     .footer {
