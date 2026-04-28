@@ -1,4 +1,4 @@
-# OxRSE training slides demo
+# OxRSE core training slides
 
 This repo conains [sli.dev](https://sli.dev/) slideshow wrappers for our training material.
 The meat of each slideshow and the theme `theme-oxrse` are in `common` which is a submodule, pointing to the [training-course-slides](https://github.com/OxfordRSE/training-course-slides) repo.
@@ -17,28 +17,6 @@ To preview / live edit a presentation:
 ```console
 npx slidev --open --entry presentations/functional/slides.md
 ```
-
-If you encounter an error similar to this:
-
-```text
-var shouldDebug = hasLocalStorage && /*#__PURE__*/localStorage.getItem("DEBUG") || hasProcess && process.env.DEBUG;
-                                                               ^
-
-TypeError: localStorage.getItem is not a function
-    at Object.<anonymous> (node_modules/@typescript/vfs/dist/vfs.cjs.development.js:25:64)
-    at Module._compile (node:internal/modules/cjs/loader:1809:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1940:10)
-    at Module.load (node:internal/modules/cjs/loader:1530:32)
-    at Module._load (node:internal/modules/cjs/loader:1332:12)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
-    at Module.require (node:internal/modules/cjs/loader:1553:12)
-    at require (node:internal/modules/helpers:152:16)
-    at Object.<anonymous> (node_modules/@typescript/vfs/dist/index.js:7:20)
-    at Module._compile (node:internal/modules/cjs/loader:1809:14)
-```
-
-You may need to set `NODE_OPTIONS='--no-webstorage'` during the build. This is
-because of an incompatability with Node >=25. See this [Vue Devtools issue comment](https://github.com/vuejs/devtools/issues/977#issuecomment-3411051527) and the [TypeScript Website pull request](https://github.com/microsoft/TypeScript-Website/pull/3450).
 
 ### Build with a specific training event
 
@@ -65,7 +43,7 @@ sessions:
     topic: Version control with Git
   - date: "29 Jan"
     slot: afternoon
-    topic: Collaboration with GitHub
+    topic: Collaborative Code Development
   - date: "05 Feb"
     slot: morning
     topic: Software Testing
@@ -94,6 +72,30 @@ TRAINING_EVENT='hilary-2026' npx slidev --open --entry presentations/functional/
 
 Note: this is an initial implementation and there is no rigorous error checking
 at the moment, e.g. you can put anything in the 'date' field.
+
+### Build Error
+
+If you encounter an error similar to this:
+
+```text
+var shouldDebug = hasLocalStorage && /*#__PURE__*/localStorage.getItem("DEBUG") || hasProcess && process.env.DEBUG;
+                                                               ^
+
+TypeError: localStorage.getItem is not a function
+    at Object.<anonymous> (node_modules/@typescript/vfs/dist/vfs.cjs.development.js:25:64)
+    at Module._compile (node:internal/modules/cjs/loader:1809:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1940:10)
+    at Module.load (node:internal/modules/cjs/loader:1530:32)
+    at Module._load (node:internal/modules/cjs/loader:1332:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1553:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (node_modules/@typescript/vfs/dist/index.js:7:20)
+    at Module._compile (node:internal/modules/cjs/loader:1809:14)
+```
+
+You may need to set `NODE_OPTIONS='--no-webstorage'` during the build. This is
+because of an incompatability with Node >=25. See this [Vue Devtools issue comment](https://github.com/vuejs/devtools/issues/977#issuecomment-3411051527) and the [TypeScript Website pull request](https://github.com/microsoft/TypeScript-Website/pull/3450).
 
 ## Deployment
 
