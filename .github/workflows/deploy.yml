@@ -35,6 +35,8 @@ jobs:
 
       - name: Build
         shell: bash
+        env:
+          TRAINING_EVENT: ${{ github.repository == 'OxfordRSE/training-slides-event' && 'trinity-2026' || '' }}
         run: ./build_all.sh
 
       - name: Setup Pages
