@@ -27,7 +27,6 @@ continuous_integration:
   title: Continuous Integration
   description: Setting up automated testing and quality checks with continuous integration tools to catch issues early and maintain code health.
   audience: Tooling
-  available: false
 packaging_dependency:
   number: 7
   description: How to package and manage dependencies so software stays reusable and distributable.
