@@ -23,5 +23,5 @@ training-event-only: true
 ---
 
 ```yaml
-src: ../../common/courses/continuous_ingegration/main.md
+src: ../../common/courses/continuous_integration/main.md
 ```
