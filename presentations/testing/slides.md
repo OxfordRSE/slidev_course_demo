@@ -1,6 +1,6 @@
 ---
 theme: oxrse
-title: Version Control with Git
+title: Software Testing
 addons:
   - ../common/addon
 layout: cover
@@ -16,14 +16,14 @@ mdc: true
 ```yaml
 layout: orientation
 title: Orientation
-highlight: Version Control with Git
+highlight: Software Testing
 training-event-only: true
 ```
 
 ---
 
 ```yaml
-src: ../../common/courses/version_control/main.md
+src: ../../common/courses/testing/main.md
 ```
 
 ---
