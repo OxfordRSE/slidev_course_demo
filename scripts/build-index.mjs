@@ -55,7 +55,7 @@ async function getPresentationEntries() {
     ...[...presentationDirs].filter(slug => !metadataSlugs.has(slug)).sort(),
   ]
 
-  return Promise.all(slugs.map(async (slug) => {
+  const entries = await Promise.all(slugs.map(async (slug) => {
     const metadata = courseMetadata?.[slug] ?? {}
     const hasSlides = presentationDirs.has(slug)
     const frontmatter = hasSlides ? await readPresentationFrontmatter(slug) : {}
@@ -71,8 +71,10 @@ async function getPresentationEntries() {
       href,
       available,
       ctaLabel: available ? 'Open presentation' : 'Slides not available',
+      coreOnly: Boolean(metadata.coreOnly),
     }
   }))
+  return process.env.TRAINING_EVENT ? entries.filter(p => !p.coreOnly) : entries
 }
 
 async function readEventSchedule() {
