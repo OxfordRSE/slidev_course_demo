@@ -1,4 +1,6 @@
 ---
+layout: default
+---
 
 # Introduction to Continuous Integration (CI)
 
@@ -9,6 +11,10 @@
 - Helps ensure **compatibility**, **functionality**, and reduces unexpected problems
 
 </v-clicks>
+
+<style>
+    ul { @apply flex flex-col h-100 justify-evenly text-xl }
+</style>
 
 ---
 layout: two-cols
@@ -24,9 +30,13 @@ layout: two-cols
 
 </v-clicks>
 
+<style>
+    ul { @apply flex flex-col h-100 justify-evenly text-xl }
+</style>
+
 ::right::
 <div class="pl-4 pt-8">
-  <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-600">
+  <p class="mb-3 text-sm font-semibold tracking-wide text-gray-600">
     Same codebase, different outcomes across platforms
   </p>
   <table class="w-full text-base border-separate border-spacing-1">
@@ -81,6 +91,10 @@ layout: two-cols
 
 </v-clicks>
 
+<style>
+    ul { @apply flex flex-col h-100 justify-evenly text-xl }
+</style>
+
 ::right::
 <div class="pl-4 flex items-center justify-center h-full">
   <img
@@ -91,8 +105,21 @@ layout: two-cols
 </div>
 
 ---
+layout: two-cols
+---
 
 # Key principles of CI (continued)
+
+
+<div class="h-full flex items-center justify-left">
+  <img
+    src="./img/ci_visibility.png"
+    alt="Visible CI info on GitHub pull request"
+    class="w-4/5"
+  />
+</div>
+
+::right::
 
 <v-clicks>
 
@@ -101,6 +128,11 @@ layout: two-cols
 - **Visibility and transparency**: make build and test results accessible to the whole team
 
 </v-clicks>
+
+<style>
+    ul { @apply flex flex-col h-100 justify-evenly text-xl }
+</style>
+
 
 ---
 
@@ -113,6 +145,10 @@ layout: two-cols
 - **Reproducibility**: standardised automated processes produce consistent results
 
 </v-clicks>
+
+<style>
+    ul { @apply flex flex-col h-100 justify-evenly text-xl }
+</style>
 
 ---
 
@@ -141,19 +177,27 @@ layout: two-cols
 
 </v-clicks>
 
+<style>
+    p { @apply text-xl }
+</style>
+
 ---
 
 # This course
 
+### Hands-on setup of CI for a small **Python** project using **GitHub Actions**
+
 <v-clicks>
 
-- Hands-on setup of CI for a small **Python** project using **GitHub Actions**
-- Topics covered:
-  - Introduction to **GitHub Actions**
-  - Generating **code coverage** information
-  - Creating and deploying **documentation**
+- Introduction to **GitHub Actions**
+- Generating **code coverage** information
+- Creating and deploying **documentation**
 
 </v-clicks>
+
+<style>
+    ul { @apply flex flex-col h-100 justify-evenly text-xl }
+</style>
 
 ---
 layout: two-cols
@@ -208,20 +252,24 @@ layout: two-cols
 
 <v-clicks>
 
-* Visit the [**GitHub Template Repository**](https://github.com/OxfordRSE/ci_course_start)
-* Click **Use this template** and create a new repository
-* Name the repository
-* Clone it to your local machine
-* Continue to the next lesson for further instructions
+- Visit the [**GitHub Template Repository**](https://github.com/OxfordRSE/ci_course_start)
+- Click **Use this template** and create a new repository
+- Name the repository
+- Clone it to your local machine
+- Continue to follow the course online for further instructions
 
 </v-clicks>
 
+<style>
+    ul { @apply flex flex-col h-100 justify-evenly text-xl }
+</style>
+
 ::right::
 
-<div class="pl-4 h-full">
-  <iframe
-    src="https://github.com/OxfordRSE/ci_course_start"
-    title="GitHub template repository"
-    class="w-full h-100 border border-gray-300 rounded"
-  ></iframe>
+<div class="h-full flex items-center justify-right">
+  <img
+    src="./img/ci_repo.png"
+    alt="Visible CI info on GitHub pull request"
+    class="w-4/5"
+  />
 </div>
