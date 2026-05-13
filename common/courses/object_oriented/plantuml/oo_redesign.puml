@@ -1,0 +1,42 @@
+@startuml
+!theme spacelab
+skinparam classAttributeIconSize 0
+skinparam ArrowFontColor #446e9b
+scale 0.84
+
+abstract class TemperatureModel {
+  {abstract} +calculate_temperature(gas, photons)
+}
+class MatthewsModel {
+  +calculate_temperature(gas, photons)
+}
+class SimsModel {
+  +calculate_temperature(gas, photons)
+}
+
+abstract class PhotonSource {
+  {abstract} +generate()
+}
+class BlackHole {
+  +generate()
+}
+class WhiteDwarf {
+  +generate()
+}
+
+class GasCloud {
+  -temperature_model: TemperatureModel
+  +temperature
+  -structure
+  +calculate_temperature(photons)
+  +calculate_structure()
+}
+
+TemperatureModel <|-- MatthewsModel
+TemperatureModel <|-- SimsModel
+PhotonSource <|-- BlackHole
+PhotonSource <|-- WhiteDwarf
+
+GasCloud *-- TemperatureModel : has-a
+GasCloud ..> PhotonSource : uses
+@enduml

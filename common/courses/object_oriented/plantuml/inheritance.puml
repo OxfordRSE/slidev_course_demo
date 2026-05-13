@@ -1,0 +1,36 @@
+@startuml
+!theme spacelab
+skinparam classAttributeIconSize 0
+
+together {
+  class Person {
+    +name
+    +office
+  }
+  class Paper {
+    +title
+    +text
+  }
+}
+
+class Admin
+class Academic {
+  +papers
+  +write_paper()
+}
+class PhDStudent {
+  +graduate()
+}
+class Lecturer {
+  +courses
+  +teach_course()
+}
+
+Person -r[hidden]- Paper
+
+Person <|-- Admin
+Person <|-- Academic
+Academic <|-- PhDStudent
+Academic <|-- Lecturer
+Academic *-- Paper : writes
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+!theme spacelab
+skinparam classAttributeIconSize 0
+
+class Person {
+  +name
+}
+
+class Academic {
+  +write_report()
+}
+
+class Admin {
+  +write_report()
+}
+
+class DeptHead
+
+Person <|-- Academic
+Person <|-- Admin
+Academic <|-- DeptHead
+Admin <|-- DeptHead
+
+note right of DeptHead : Which write_report()?
+@enduml
