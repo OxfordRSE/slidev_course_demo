@@ -1,0 +1,22 @@
+@startuml
+!theme spacelab
+skinparam classAttributeIconSize 0
+
+abstract class Academic {
+  +papers
+  +write_paper()
+  {abstract} +describe_duty()
+}
+
+class PhDStudent {
+  +describe_duty()
+}
+
+class ResearchSoftwareEngineer {
+  +write_paper()
+  +describe_duty()
+}
+
+Academic <|-- PhDStudent
+Academic <|-- ResearchSoftwareEngineer
+@enduml

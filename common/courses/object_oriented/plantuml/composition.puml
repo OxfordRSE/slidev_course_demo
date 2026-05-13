@@ -1,0 +1,36 @@
+@startuml
+!theme spacelab
+skinparam classAttributeIconSize 0
+
+together {
+  class Person {
+    +name
+    +office
+  }
+  class Author {
+    +papers
+    +write_paper()
+  }
+}
+
+class Instructor {
+  +courses
+  +teach_course()
+}
+
+class Admin
+class Academic
+class Lecturer
+class Librarian
+
+Person -r[hidden]- Author
+
+Person <|-- Admin
+Person <|-- Academic
+Admin <|-- Librarian
+Academic <|-- Lecturer
+
+Academic *-r- Author : has role
+Librarian *-u- Instructor : has role
+Lecturer *-u- Instructor : has role
+@enduml
