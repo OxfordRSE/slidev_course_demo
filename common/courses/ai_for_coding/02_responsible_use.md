@@ -50,12 +50,12 @@ layout: two-cols
 
 # Risks
 
-- Security - Perplexity browser extension
+- Security - Perplexity browser (Comet)
   - Prompt injection
   - Very hard to mitigate!
 
 - Sycophancy
-  - the model agrees with you rather than correcting you even you are not quite right
+  - the model agrees with you rather than correcting you even if you are wrong
 
 - Human factors
   - Sunk-cost fallacy
