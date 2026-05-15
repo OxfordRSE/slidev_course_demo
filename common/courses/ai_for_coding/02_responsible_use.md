@@ -162,30 +162,6 @@ Which would be easiest to overlook?
 
 ---
 
-# Example - CSV Reader
-
-<img src="./img/csv_1.png" style="max-width: 100%; max-height: 400px; display: block; margin: 0 auto;" alt="CSV calculate median" />
-
----
-
-# Example - CSV Reader
-
-<img src="./img/csv_2.png" style="max-width: 100%; max-height: 400px; display: block; margin: 0 auto;" alt="CSV median code" />
-
----
-
-# Example - CSV Reader
-
-<img src="./img/csv_3.png" style="max-width: 100%; max-height: 400px; display: block; margin: 0 auto;" alt="CSV exception" />
-
----
-
-# Example - CSV Reader
-
-<img src="./img/csv_4.png" style="max-width: 100%; max-height: 400px; display: block; margin: 0 auto;" alt="CSV diagnosis" />
-
----
-
 # Example - Using Polars
 
 - Background: Tracking bees in video frames using an object detection network.
