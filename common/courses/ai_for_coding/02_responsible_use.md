@@ -329,6 +329,8 @@ except ImportError:
 cfg = Config()
 ```
 
+<hr style="border: none; border-top: 1px solid #6b7280; margin: 0.75em 0;" />
+
 ```python {lines:true}
 import sys
 import os
