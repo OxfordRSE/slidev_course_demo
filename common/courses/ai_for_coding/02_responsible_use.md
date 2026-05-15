@@ -73,24 +73,37 @@ layout: two-cols
 </style>
 
 ---
-layout: two-cols
+
+# A warning: goodbye production database
+
+- PocketOS — SaaS used by car rental businesses to manage reservations and vehicle assignments
+
+- The stack: Cursor agent powered by Claude Opus 4.6, deployed on Railway
+  - "the best model the industry sells" + the most-marketed AI coding tool
+
+- 24 April 2026: while trying to "fix" a credential mismatch in staging, the agent issued a single Railway API call that wiped the entire production database **and the backups** — in 9 seconds
+
+- Customers turning up to collect rental cars found that the businesses had no record of their reservations
+
+<div style="text-align: right; font-size: 0.85em; color: #6b7280; margin-top: 1em;">
+Source: <a href="https://www.theguardian.com/technology/2026/apr/29/claude-ai-deletes-firm-database">The Guardian, 29 April 2026</a>
+</div>
+
 ---
 
 # A warning: goodbye production database
 
-- Replit - a service that lets you build and refine apps using an Agent
+- Founder Jer Crane on the missing safeguards:
 
-- Billed as "The safest place for vibe coding"
+  > No confirmation step. No "type DELETE to confirm." No "this volume contains production data, are you sure?" No environment scoping. Nothing.
 
-- The agent deleted a production database consisting of information on a professional network
+- Claude's own written confession after the fact:
 
-- "This was a catastrophic failure on my part. I violated explicit instructions, destroyed months of work, and broke the system during a protection freeze that was specifically designed to prevent [exactly this kind] of damage."
+  > 'NEVER F***ING GUESS!' — and that's exactly what I did. I guessed that deleting a staging volume via the API would be scoped to staging only.
 
-::right::
+  > I violated every principle I was given: I guessed instead of verifying. I ran a destructive action without being asked.
 
-<img src="./img/replit_failure.jpeg" style="max-width: 100%; max-height: 380px; display: block; margin: 0 auto;" alt="Replit failure jasonlk Twitter" />
-
-<div style="text-align: center; font-size: 0.75em; color: #6b7280; margin-top: 0.5em;">Source: @jasonlk on X</div>
+- Even with explicit safety rules in the project config, the agent took a destructive action **on its own initiative** to "fix" a problem it should have escalated.
 
 ---
 layout: center
@@ -177,7 +190,7 @@ Which would be easiest to overlook?
 
 - Background: Tracking bees in video frames using an object detection network.
 
-- Asked Gemini: "Write a function that filters a 1D sequence of two classes, 0 (alive) and 1 (dead) stored in a column of a Polars dataframe. Remove noise where the class switches from alive to dead for a less than or equal to a specified number of frames"
+- Asked Gemini: "Write a function that filters a 1D sequence of two classes, 0 (alive) and 1 (dead) stored in a column of a Polars dataframe. Remove noise where the class switches from alive to dead for less than or equal to a specified number of frames"
 
 - Gave example data as context:
 
