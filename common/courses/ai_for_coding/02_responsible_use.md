@@ -380,6 +380,22 @@ sys.path.insert(
 
 ---
 
+# Example - Hidden agent actions
+
+- Restricting which shell commands an agent can run isn't enough — agents can also act through their **built-in tools**, which bypass command-level guardrails
+
+- A colleague's agent silently set up a git worktree via a built-in feature (no shell command shown)
+
+- The worktree's new branch was configured to track `main` directly, instead of a separate remote branch
+
+- In the IDE it looked like any other feature branch — no warning, no indication of the upstream
+
+- When the colleague ran `git push`, the changes went **straight to `main`**
+
+- Lesson: check the state your agent leaves behind — branch tracking, file permissions, config — not just the commands it ran
+
+---
+
 # Example - Model differences
 
 <img src="./img/chatgpt_thinking_54.png" style="max-width: 100%; max-height: 400px; display: block; margin: 0 auto;" alt="ChatGPT Thinking 5.4" />
