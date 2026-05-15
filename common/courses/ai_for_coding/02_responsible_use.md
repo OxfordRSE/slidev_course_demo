@@ -236,6 +236,24 @@ def filter_detections_by_duration(df: pl.DataFrame, min_duration: int) -> pl.Dat
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
+.slidev-code,
+.slidev-code code,
+.slidev-code .line,
+.slidev-code span {
+  font-size: 0.85em !important;
+  line-height: 1.4 !important;
+}
+.slidev-code,
+.slidev-code code,
+.slidev-code .line {
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+}
+.slidev-code-wrapper,
+.slidev-code {
+  max-height: 380px !important;
+  overflow-y: auto !important;
+}
 </style>
 
 ---
@@ -288,7 +306,7 @@ layout: two-cols
 
 ::right::
 
-```python {3,8-20}{lines:true, maxHeight:'200px'}
+```python {3}{lines:true, maxHeight:'200px'}
 import numpy as np
 from ..object_detection import config as cfg
 from object_detection import config as cfg
@@ -321,6 +339,42 @@ sys.path.insert(
     os.path.join(os.path.dirname(__file__), '..', 'analysis')
 )
 ```
+
+<style>
+.slidev-code,
+.slidev-code code,
+.slidev-code .line,
+.slidev-code span {
+  font-size: 0.85em !important;
+  line-height: 1.4 !important;
+}
+.slidev-code,
+.slidev-code code,
+.slidev-code .line {
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+}
+.slidev-code-wrapper,
+.slidev-code {
+  overflow-y: auto !important;
+}
+.slidev-code .line {
+  opacity: 1 !important;
+}
+.slidev-code .line.highlighted {
+  background-color: rgba(239, 68, 68, 0.25) !important;
+  border-left: 3px solid rgb(239, 68, 68) !important;
+  padding-left: 0.25em !important;
+  margin-left: -0.25em !important;
+}
+.slidev-code .line:nth-child(n+9):nth-child(-n+18),
+.slidev-code .line:nth-child(20) {
+  background-color: rgba(34, 197, 94, 0.25) !important;
+  border-left: 3px solid rgb(34, 197, 94) !important;
+  padding-left: 0.25em !important;
+  margin-left: -0.25em !important;
+}
+</style>
 
 ---
 
