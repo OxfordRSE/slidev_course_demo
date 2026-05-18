@@ -379,7 +379,7 @@ layout: two-cols
 
 <div class="pr-3">
 
-- A plan provides context.
+- A plan provides context as a persistent artefact across sessions.
 - Built-in 'Plan Mode' in agentic CLI tools:
   - Claude Code
   - Codex CLI
@@ -399,7 +399,6 @@ layout: two-cols
   - Clarify what the agent should do.
   - Invalid assumptions can be found earlier.
   - Force yourself to review your approach before jumping to execution.
-  - The plan can be a persistent artefact that provides context across sessions.
 
 </div>
 
