@@ -50,12 +50,12 @@ layout: two-cols
 
 # Risks
 
-- Security - Perplexity browser extension
+- Security - Perplexity browser (Comet)
   - Prompt injection
   - Very hard to mitigate!
 
 - Sycophancy
-  - the model agrees with you rather than correcting you even you are not quite right
+  - the model agrees with you rather than correcting you even if you are wrong
 
 - Human factors
   - Sunk-cost fallacy
@@ -73,24 +73,37 @@ layout: two-cols
 </style>
 
 ---
-layout: two-cols
+
+# A warning: goodbye production database
+
+- PocketOS — SaaS used by car rental businesses to manage reservations and vehicle assignments
+
+- The stack: Cursor agent powered by Claude Opus 4.6, deployed on Railway
+  - "the best model the industry sells" + the most-marketed AI coding tool
+
+- 24 April 2026: while trying to "fix" a credential mismatch in staging, the agent issued a single Railway API call that wiped the entire production database **and the backups** — in 9 seconds
+
+- Customers turning up to collect rental cars found that the businesses had no record of their reservations
+
+<div style="text-align: right; font-size: 0.85em; color: #6b7280; margin-top: 1em;">
+Source: <a href="https://www.theguardian.com/technology/2026/apr/29/claude-ai-deletes-firm-database">The Guardian, 29 April 2026</a>
+</div>
+
 ---
 
 # A warning: goodbye production database
 
-- Replit - a service that lets you build and refine apps using an Agent
+- Founder Jer Crane on the missing safeguards:
 
-- Billed as "The safest place for vibe coding"
+  > No confirmation step. No "type DELETE to confirm." No "this volume contains production data, are you sure?" No environment scoping. Nothing.
 
-- The agent deleted a production database consisting of information on a professional network
+- Claude's own written confession after the fact:
 
-- "This was a catastrophic failure on my part. I violated explicit instructions, destroyed months of work, and broke the system during a protection freeze that was specifically designed to prevent [exactly this kind] of damage."
+  > 'NEVER F***ING GUESS!' — and that's exactly what I did. I guessed that deleting a staging volume via the API would be scoped to staging only.
 
-::right::
+  > I violated every principle I was given: I guessed instead of verifying. I ran a destructive action without being asked.
 
-<img src="./img/replit_failure.jpeg" style="max-width: 100%; max-height: 380px; display: block; margin: 0 auto;" alt="Replit failure jasonlk Twitter" />
-
-<div style="text-align: center; font-size: 0.75em; color: #6b7280; margin-top: 0.5em;">Source: @jasonlk on X</div>
+- Even with explicit safety rules in the project config, the agent took a destructive action **on its own initiative** to "fix" a problem it should have escalated.
 
 ---
 layout: center
@@ -149,35 +162,11 @@ Which would be easiest to overlook?
 
 ---
 
-# Example - CSV Reader
-
-<img src="./img/csv_1.png" style="max-width: 100%; max-height: 400px; display: block; margin: 0 auto;" alt="CSV calculate median" />
-
----
-
-# Example - CSV Reader
-
-<img src="./img/csv_2.png" style="max-width: 100%; max-height: 400px; display: block; margin: 0 auto;" alt="CSV median code" />
-
----
-
-# Example - CSV Reader
-
-<img src="./img/csv_3.png" style="max-width: 100%; max-height: 400px; display: block; margin: 0 auto;" alt="CSV exception" />
-
----
-
-# Example - CSV Reader
-
-<img src="./img/csv_4.png" style="max-width: 100%; max-height: 400px; display: block; margin: 0 auto;" alt="CSV diagnosis" />
-
----
-
 # Example - Using Polars
 
 - Background: Tracking bees in video frames using an object detection network.
 
-- Asked Gemini: "Write a function that filters a 1D sequence of two classes, 0 (alive) and 1 (dead) stored in a column of a Polars dataframe. Remove noise where the class switches from alive to dead for a less than or equal to a specified number of frames"
+- Asked Gemini: "Write a function that filters a 1D sequence of two classes, 0 (alive) and 1 (dead) stored in a column of a Polars dataframe. Remove noise where the class switches from alive to dead for less than or equal to a specified number of frames"
 
 - Gave example data as context:
 
@@ -247,6 +236,24 @@ def filter_detections_by_duration(df: pl.DataFrame, min_duration: int) -> pl.Dat
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
+.slidev-code,
+.slidev-code code,
+.slidev-code .line,
+.slidev-code span {
+  font-size: 0.85em !important;
+  line-height: 1.4 !important;
+}
+.slidev-code,
+.slidev-code code,
+.slidev-code .line {
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+}
+.slidev-code-wrapper,
+.slidev-code {
+  max-height: 380px !important;
+  overflow-y: auto !important;
+}
 </style>
 
 ---
@@ -299,7 +306,7 @@ layout: two-cols
 
 ::right::
 
-```python {3,8-20}{lines:true, maxHeight:'200px'}
+```python {3}{lines:true, maxHeight:'200px'}
 import numpy as np
 from ..object_detection import config as cfg
 from object_detection import config as cfg
@@ -322,6 +329,8 @@ except ImportError:
 cfg = Config()
 ```
 
+<hr style="border: none; border-top: 1px solid #6b7280; margin: 0.75em 0;" />
+
 ```python {lines:true}
 import sys
 import os
@@ -332,6 +341,58 @@ sys.path.insert(
     os.path.join(os.path.dirname(__file__), '..', 'analysis')
 )
 ```
+
+<style>
+.slidev-code,
+.slidev-code code,
+.slidev-code .line,
+.slidev-code span {
+  font-size: 0.85em !important;
+  line-height: 1.4 !important;
+}
+.slidev-code,
+.slidev-code code,
+.slidev-code .line {
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+}
+.slidev-code-wrapper,
+.slidev-code {
+  overflow-y: auto !important;
+}
+.slidev-code .line {
+  opacity: 1 !important;
+}
+.slidev-code .line.highlighted {
+  background-color: rgba(239, 68, 68, 0.25) !important;
+  border-left: 3px solid rgb(239, 68, 68) !important;
+  padding-left: 0.25em !important;
+  margin-left: -0.25em !important;
+}
+.slidev-code .line:nth-child(n+9):nth-child(-n+18),
+.slidev-code .line:nth-child(20) {
+  background-color: rgba(34, 197, 94, 0.25) !important;
+  border-left: 3px solid rgb(34, 197, 94) !important;
+  padding-left: 0.25em !important;
+  margin-left: -0.25em !important;
+}
+</style>
+
+---
+
+# Example - Hidden agent actions
+
+- Restricting which shell commands an agent can run isn't enough — agents can also act through their **built-in tools**, which bypass command-level guardrails
+
+- A colleague's agent silently set up a git worktree via a built-in feature (no shell command shown)
+
+- The worktree's new branch was configured to track `main` directly, instead of a separate remote branch
+
+- In the IDE it looked like any other feature branch — no warning, no indication of the upstream
+
+- When the colleague ran `git push`, the changes went **straight to `main`**
+
+- Lesson: check the state your agent leaves behind — branch tracking, file permissions, config — not just the commands it ran
 
 ---
 
