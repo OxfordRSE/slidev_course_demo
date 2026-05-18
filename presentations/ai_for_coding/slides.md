@@ -1,6 +1,9 @@
 ---
 theme: oxrse
 title: Using AI for Coding
+authors:
+  - Oliver King
+  - Jack Leland
 addons:
   - ../common/addon
   - fancy-arrow
