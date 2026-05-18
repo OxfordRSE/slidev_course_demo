@@ -25,9 +25,9 @@ layout: center
 
     b. Fully autonomous agents - e.g. OpenClaw
 
-5. Agent instructions and skills files - e.g. `AGENTS.md`, `AGENT.md`, `CLAUDE.md`
-6. Web-based tools - e.g. Lovable, Replit (Vibe coding apps using natural language)
-7. API usage - e.g. OpenAI API, llm.datasette.io
+4. Agent instructions and skills files - e.g. `AGENTS.md`, `AGENT.md`, `CLAUDE.md`
+5. Web-based tools - e.g. Lovable, Replit (Vibe coding apps using natural language)
+6. API usage - e.g. OpenAI API, llm.datasette.io
 
 ---
 
@@ -364,12 +364,12 @@ layout: two-cols
   - ChatGPT, Codex (desktop, web, CLI)
 - Gemini accounts for all staff and students
   - Gemini web chat, Gemini CLI, Antigravity?
-- GitHub Copilot EDU for all staff and students
-  - On github, in VSCode 
+- GitHub Copilot Edu for all staff and students
+  - On GitHub, in VS Code 
   - Currently allows you to use other models (Gemini, Codex, Claude) but this will change
 - Access to other harnesses i.e. OpenCode
-  - Can connect Copilot + Codex but not Gemini (needs api-key)
-- No official access to Anthropic models, technically not allowed to use
+  - Can connect Copilot + Codex but not Gemini (needs API key)
+- No official access to Anthropic models (not allowed to use on Oxford data)
 
 </v-clicks>
 
