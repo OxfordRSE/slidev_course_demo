@@ -372,6 +372,44 @@ Evaluate your code from the exercise, how does it do?
 </div>
 
 ---
+layout: two-cols
+---
+
+# Plan first
+
+<div class="pr-3">
+
+- A plan provides context.
+- Built-in 'Plan Mode' in agentic CLI tools:
+  - Claude Code
+  - Codex CLI
+- You can always plan without a 'Plan Mode':
+  - Use the chat interface to come up with a plan.
+  - Ask the agent to explore and perform research, then propose a plan.
+  - Write the plan yourself! (spec-driven development)
+  - No matter how, it is important to iterate and review the plan yourself.
+
+</div>
+
+::right::
+
+<div class="pl-3">
+
+- Why?
+  - Clarify what the agent should do.
+  - Invalid assumptions can be found earlier.
+  - Force yourself to review your approach before jumping to execution.
+  - The plan can be a persistent artefact that provides context across sessions.
+
+</div>
+
+<style>
+.col-left li:first-child p:first-child {
+  margin-top: 0;
+}
+</style>
+
+---
 
 # Responsible Use Workflow
 
