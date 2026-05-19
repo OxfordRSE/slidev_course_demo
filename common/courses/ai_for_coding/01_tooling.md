@@ -18,11 +18,16 @@ layout: center
 # Interacting with LLMs
 
 1. ChatGPT web interface / app
-2. Through IDEs - e.g. GitHub Copilot in VSCode
-   - Chat interface, Autocomplete, Edit interface, Agent interface
-3. Agentic CLI tools - e.g. Claude Code, Codex
-4. Web-based tools - e.g. Lovable, Replit (Vibe coding apps using natural language)
-5. API usage - e.g. OpenAI API, llm.datasette.io
+2. IDE autocomplete - e.g. GitHub Copilot in VSCode
+3. Agents
+
+    a. Human-in-the-loop coding agents - e.g. Claude Code, Codex, OpenCode
+
+    b. Fully autonomous agents - e.g. OpenClaw
+
+4. Agent instructions and skills files - e.g. `AGENTS.md`, `AGENT.md`, `CLAUDE.md`
+5. Web-based tools - e.g. Lovable, Replit (Vibe coding apps using natural language)
+6. API usage - e.g. OpenAI API, llm.datasette.io
 
 ---
 
@@ -33,33 +38,40 @@ layout: center
   - Tiers constantly changing
   - How do you decide which one to choose?
 
-- Walkthrough
-
 ---
 
-# 2. IDEs
+# 2. IDE autocomplete
 
 - LLMs are used via installed extensions e.g. GitHub Copilot
   - Model can be changed
-  - Usage mode can be changed (Agent, Chat, Edit)
+  - Best known for inline autocomplete / code completion
   - Different data privacy rules apply when interacting via this interface
 
-- Walkthrough
 - Other IDEs also available
 
 ---
 
-# 3. Agentic (CLI) coding
+# 3 a. Human-in-the-loop coding agents
 
-- Software agents operate independently to complete tasks
+- User stays in the loop while the agent explores, edits and runs tools
   - Can access other files and run tools on the operating system
-  - Can find context automatically!
+  - Can find context automatically
+  - Good for iterative coding with review and steerability
 
-- Codex - OpenAI agent, web and command-line version
-
-- Claude Code walkthrough
+- Example tools: Claude Code, Codex CLI, OpenCode
 
 ---
+
+# 3 b. Fully autonomous agents
+
+- Agent works with minimal live supervision once given a task
+  - Better for longer-running or delegated pieces of work
+  - Often used asynchronously, sometimes in remote sandboxes/containers
+  - Higher utility (possibly), but also much greater need for guardrails and review
+  - Often sold as 'your personal AI assistant'
+
+- Example: OpenClaw (and NemoClaw), Cowork
+
 ---
 
 # 4. Web-based Agentic Tools
@@ -103,37 +115,39 @@ layout: two-cols
 
 # Selecting a Model
 
-<div class="two-states">
-<div v-click.hide>
+<v-switch at="0">
+<template #0>
 
 - Different models for different purposes
   - **Standard**
   - Thinking / reasoning
   - Pro
 
-</div>
+</template>
 
-<div v-after>
+<template #1>
 
 - Different models for different purposes
   - ~~Standard~~ **Instant**
   - ~~Thinking / reasoning~~
   - ~~Pro~~ **Flagship**
 
-</div>
-</div>
+</template>
+
+<template #2>
+
+- Different models for different purposes
+  - ~~Standard~~ ~~Instant~~ **Instant / Fast**
+  - ~~Thinking / reasoning~~ **Thinking**
+  - ~~Pro~~ ~~Flagship~~ **Pro**
+
+</template>
+</v-switch>
 
 - Different additional context/modes
   - Web search
   - Deep research - Gemini, Perplexity
   - Study & learn
-
-<style>
-.two-states .slidev-vclick-hidden {
-  height: 0;
-  overflow: hidden;
-}
-</style>
 
 ---
 
@@ -188,7 +202,7 @@ layout: center
 - Provide examples of expected output/behaviour
 
 - Iterate and refine
-  - Can use LLMs to generate/iterate on your prompts
+  - Can use LLMs to generate/iterate on your prompts (meta-prompting)
 
 - Ask for step-by-step reasoning (chain-of-thought)
 
@@ -204,15 +218,31 @@ layout: center
 
 - Builds upon prompt engineering by creating an entire information ecosystem
 
-- Active area of research
+- Active area of research!
 
-- Auto-context with agents: AGENTS.md, CLAUDE.md etc.
+- Auto-context with agents
+
+
+---
+
+# Context Engineering: Agent Instructions and Skills Files
+
+- Extra context files can shape how an agent works in a codebase
+  - Project instructions: `AGENTS.md`, `CLAUDE.md`
+  - Skills files can bundle reusable workflows, commands and domain knowledge
+
+- Useful for encoding team conventions, guardrails and common tasks
+
+- These make agent behaviour more repeatable than relying on a one-off prompt
+
+- WARNING: can open you to supply chain attacks
+
 
 ---
 layout: two-cols
 ---
 
-# Meaningful names provide context
+# Context Engineering: Meaningful names provide context
 
 <div class="pr-3">
 
@@ -320,6 +350,33 @@ def levenshtein(a, b):
 
 In the first case, AI reinvented the algorithm because it is constrained to the script context.
 
+</div>
+
+---
+layout: two-cols
+---
+
+# Options available for Oxford-based software engineers
+
+<v-clicks>
+
+- OpenAI accounts for all staff and students
+  - ChatGPT, Codex (desktop, web, CLI)
+- Gemini accounts for all staff and students
+  - Gemini web chat, Gemini CLI, Antigravity?
+- GitHub Copilot Edu for all staff and students
+  - On GitHub, in VS Code 
+  - Currently allows you to use other models (Gemini, Codex, Claude) but this will change
+- Access to other harnesses i.e. OpenCode
+  - Can connect Copilot + Codex but not Gemini (needs API key)
+- No official access to Anthropic models (not allowed to use on Oxford data)
+
+</v-clicks>
+
+::right::
+
+<div v-click="6" style="margin-top: 5em; padding: 1em 1.25em; border: 2px solid #2563eb; border-radius: 0.75em; background: #eff6ff; color: #1d4ed8; font-weight: 700; line-height: 1.4;">
+  Usage limits and options are tightening across the board
 </div>
 
 ---
